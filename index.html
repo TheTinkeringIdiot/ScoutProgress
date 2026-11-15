@@ -162,33 +162,35 @@ table { border-collapse: collapse; }
 "use strict";
 // ---------------------------------------------------------------------------
 // ADVENTURE DEFINITIONS - edit this block when the program changes.
-// Source: the 2024-25 program lists. Anything a scout earns
-// that is not listed here still shows up, flagged, and counts as an elective.
+// Source: the per-rank pages under
+// https://www.scouting.org/programs/cub-scouts/adventures/ (checked 2026-11-15).
+// Anything a scout earns that is not listed here still shows up, flagged, and
+// counts as an elective.
 // ---------------------------------------------------------------------------
 const DEFS = {
   "Lion": {
     required: ["Bobcat", "Mountain Lion", "Fun on the Run", "King of the Jungle", "Lion's Roar", "Lion's Pride"],
-    elective: ["Archery", "BB Gun", "Build It Up, Knock It Down", "Count On Me", "Everyday Tech", "Gizmos and Gadgets", "Go Fish", "I'll Do It Myself", "Let's Camp", "On Your Mark", "On a Roll", "Pick My Path", "Race Time", "Ready, Set, Grow", "Slingshot", "Time to Swim", "World Conservation"],
+    elective: ["Archery", "Build It Up, Knock It Down", "Champions for Nature", "Count On Me", "Everyday Tech", "Gizmos and Gadgets", "Go Fish", "I'll Do It Myself", "Let's Camp", "On Your Mark", "On a Roll", "Pick My Path", "Race Time", "Ready, Set, Grow", "Slingshot", "Time to Swim"],
   },
   "Tiger": {
     required: ["Bobcat", "Tigers in the Wild", "Tiger Bites", "Team Tiger", "Tiger's Roar", "Tiger Circles"],
-    elective: ["Archery", "BB", "Curiosity, Intrigue, and Magical Mysteries", "Designed by Tiger", "Fish On", "Floats and Boats", "Good Knights", "Let's Camp", "Race Time", "Rolling Tigers", "Safe and Smart", "Sky is the Limit", "Slingshot", "Stories in Shapes", "Summertime Fun", "Tech all Around", "Tiger Tag", "Tiger-iffic!", "Tigers in the Water", "World Conservation"],
+    elective: ["Archery", "BB Guns", "Champions for Nature", "Curiosity, Intrigue, and Magical Mysteries", "Designed by Tiger", "Fish On", "Floats and Boats", "Good Knights", "Let's Camp", "Race Time", "Rolling Tigers", "Safe and Smart", "Sky is the Limit", "Slingshot", "Stories in Shapes", "Summertime Fun", "Tech All Around", "Tiger Tag", "Tiger-iffic!", "Tigers in the Water"],
   },
   "Wolf": {
-    required: ["Bobcat", "Paws on the Path", "Running with the Pack", "Council Fire", "Safety in Numbers", "Footsteps"],
-    elective: ["A Wolf Goes Fishing", "Adventures in Coins", "Air of the Wolf", "Archery", "BB", "Champions for Nature", "Code of the Wolf", "Computing Wolves", "Cubs Who Care", "Digging in the Past", "Finding Your Way", "Germs Alive!", "Let's Camp", "Paws for Water", "Paws of Skill", "Pedal with the Pack", "Race Time", "Slingshot", "Spirit of the Water", "Summertime Fun"],
+    required: ["Bobcat", "Paws on the Path", "Running With the Pack", "Council Fire", "Safety in Numbers", "Footsteps"],
+    elective: ["A Wolf Goes Fishing", "Adventures in Coins", "Air of the Wolf", "Archery", "BB Guns", "Champions for Nature", "Code of the Wolf", "Computing Wolves", "Cubs Who Care", "Digging in the Past", "Finding Your Way", "Germs Alive!", "Let's Camp", "Paws for Water", "Paws of Skill", "Pedal With the Pack", "Race Time", "Slingshot", "Spirit of the Water", "Summertime Fun"],
   },
   "Bear": {
     required: ["Bobcat", "Bear Habitat", "Bear Strong", "Paws for Action", "Standing Tall", "Fellowship"],
-    elective: ["A Bear Goes Fishing", "Archery", "BB", "Balancing Bears", "Baloo the Builder", "Bears Afloat", "Bears on Bikes", "Champions for Nature", "Chef Tech", "Critter Care", "Forensics", "Let's Camp", "Marble Madness", "Race Time", "Roaring Laughter", "Salmon Run", "Slingshot", "Summertime Fun", "Super Science", "Whittling"],
+    elective: ["A Bear Goes Fishing", "Archery", "BB Guns", "Balancing Bears", "Baloo the Builder", "Bears Afloat", "Bears on Bikes", "Champions for Nature", "Chef Tech", "Critter Care", "Forensics", "Let's Camp", "Marble Madness", "Race Time", "Roaring Laughter", "Salmon Run", "Slingshot", "Summertime Fun", "Super Science", "Whittling"],
   },
   "Webelos": {
     required: ["Bobcat", "Webelos Walkabout", "Stronger, Faster, Higher", "My Community", "My Safety", "My Family"],
-    elective: ["Aquanaut", "Archery", "Art Explosion", "Aware and Care", "BB Gun", "Build It", "Catch the Big One", "Champions for Nature", "Chef's Knife", "Earth Rocks!", "Let's Camp", "Math on the Trail", "Modular Design", "Paddle Onward", "Pedal Away", "Race Time", "Slingshot", "Summertime Fun", "Tech on the Trail", "Yo-yo"],
+    elective: ["Aquanaut", "Archery", "Art Explosion", "Aware and Care", "BB Guns", "Build It", "Catch the Big One", "Champions for Nature", "Chef's Knife", "Earth Rocks", "Let's Camp", "Math on the Trail", "Modular Design", "Paddle Onward", "Pedal Away", "Race Time", "Slingshot", "Summertime Fun", "Tech on the Trail", "Yo-yo"],
   },
   "Arrow of Light": {
     required: ["Bobcat", "Outdoor Adventurer", "Personal Fitness", "Citizenship", "First Aid", "Duty to God"],
-    elective: ["Archery", "BB Gun", "Cycling", "Engineer", "Estimations", "Fishing", "High Tech Outdoors", "Into the Wild", "Into the Woods", "Knife Safety", "Paddle Craft", "Race Time", "Slingshot", "Summertime Fun", "Swimming", "World Conservation"],
+    elective: ["Archery", "BB Guns", "Champions for Nature", "Cycling", "Engineer", "Estimations", "Fishing", "High Tech Outdoors", "Into the Wild", "Into the Woods", "Knife Safety", "Paddle Craft", "Race Time", "Slingshot", "Summertime Fun", "Swimming"],
   },
 };
 const ELECTIVES_NEEDED = 2;   // every rank: all required adventures + 2 electives
@@ -197,7 +199,9 @@ const ELECTIVES_NEEDED = 2;   // every rank: all required adventures + 2 electiv
 const RANKS = ["Lion", "Tiger", "Wolf", "Bear", "Webelos", "Arrow of Light"];
 const ALIAS = { lion: "Lion", tiger: "Tiger", wolf: "Wolf", bear: "Bear", webelos: "Webelos", lions: "Lion", tigers: "Tiger", wolves: "Wolf", bears: "Bear", aol: "Arrow of Light", "arrow of light": "Arrow of Light" };
 
-const key = s => s.toLowerCase().replace(/[‘’]/g, "'").replace(/\s+/g, " ").trim();
+// Names are matched ignoring case and punctuation ("Earth Rocks!" = "Earth Rocks"),
+// and "BB" / "BB Gun" / "BB Guns" are treated as the same adventure.
+const key = s => s.toLowerCase().replace(/[‘’]/g, "'").replace(/[^a-z0-9' -]/g, "").replace(/\s+/g, " ").trim().replace(/^bb( guns?)?$/, "bb guns");
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 // ---- parsing ---------------------------------------------------------------

@@ -50,10 +50,11 @@ The same steps, with a screenshot, are shown on the page itself.
 ## Updating the adventure lists
 
 The required and elective adventures for each rank are in the `DEFS` block near
-the top of the script in `index.html`. They come from the 2024-25 program and
-have not been checked line by line against the current lists at
-<https://www.scouting.org/programs/cub-scouts/adventures/>. Edit that block
-when the program changes.
+the top of the script in `index.html`. They were last checked against the per-rank
+pages at <https://www.scouting.org/programs/cub-scouts/adventures/> on
+2026-11-15. Edit that block when the program changes. Names are matched
+ignoring case and punctuation, so small spelling differences between the
+website and Scoutbook do not matter.
 
 ## Hosting
 
