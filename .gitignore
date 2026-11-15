@@ -1,0 +1,13 @@
+# Scoutbook exports and generated files contain scouts' names. Never commit them.
+*.csv
+*.xlsx
+*.xls
+*.pdf
+.~lock.*
+
+# OS and editor clutter
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
